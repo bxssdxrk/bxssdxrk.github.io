@@ -51,12 +51,18 @@
     Usuários que leram as regras: <span id="user-count">0</span>
   </div>
   <script>
-    async function fetchUserCount() {
-      const response = await fetch('https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules');
+  async function fetchUserCount() {
+    const endpoint = 'https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules';
+    try {
+      const response = await fetch(endpoint);
       const data = await response.json();
       document.getElementById('user-count').innerText = data.value;
+    } catch (error) {
+      console.error('Erro ao buscar o contador:', error);
+      document.getElementById('user-count').innerText = 'Erro ao carregar';
     }
-    fetchUserCount();
-  </script>
+  }
+  fetchUserCount();
+</script>
 </body>
 </html>
