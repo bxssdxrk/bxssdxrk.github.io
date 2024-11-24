@@ -77,7 +77,7 @@
 
     // Função para buscar o contador atual
     async function fetchCounter() {
-      const endpoint = 'https://api.countapi.xyz/get/https://bxssdxrk.github.io/dxrkrules/';
+      const endpoint = 'https://api.countapi.xyz/get/bxssdxrk.github.io/dxrkrules';  // Namespace e chave
       try {
         const response = await fetch(endpoint);
         const data = await response.json();
@@ -90,7 +90,7 @@
 
     // Função para incrementar o contador
     async function incrementCounter() {
-      const endpoint = 'https://api.countapi.xyz/hit/https://bxssdxrk.github.io/dxrkrules/';
+      const endpoint = 'https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules';  // Namespace e chave
       try {
         const response = await fetch(endpoint);
         const data = await response.json();
