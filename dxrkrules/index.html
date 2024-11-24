@@ -9,75 +9,54 @@
       background-color: black;
       color: white;
       font-family: Arial, sans-serif;
-      padding: 20px;
+      line-height: 1.6;
       margin: 0;
+      padding: 20px;
     }
     h1 {
       text-align: center;
-      margin-bottom: 40px;
+      text-transform: uppercase;
+      font-size: 2em;
+      margin-bottom: 20px;
     }
-    .rules {
-      max-width: 800px;
-      margin: 0 auto;
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
     }
     .counter {
       text-align: center;
-      margin: 20px 0;
-      font-size: 18px;
+      margin-top: 20px;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
   <h1>Regras</h1>
+  <ul>
+    <li>❌ <strong>Menores de 15 anos</strong><br>A entrada de menores de 15 anos no grupo é proibida, para garantir que o conteúdo seja adequado à faixa etária do público.</li>
+    <li>❌ <strong>Conteúdo Gore</strong><br>Imagens ou vídeos com violência extrema, mortes explícitas ou ferimentos gráficos não são permitidos.</li>
+    <li>❌ <strong>Pornografia</strong><br>O envio de conteúdo pornográfico é proibido entre os horários das 05:00 às 20:00. Fora desse horário, o conteúdo será permitido apenas se estiver dentro dos padrões de respeito e consentimento.</li>
+    <li>❌ <strong>Spam (não confundir com Flood)</strong><br>É proibido o envio excessivo de mensagens irrelevantes, links promocionais ou conteúdo indesejado.</li>
+    <li>❌ <strong>Doxxing</strong><br>Divulgar informações pessoais de outros membros sem consentimento (ex.: nome completo, cpf, endereço, etc.) é estritamente proibido.</li>
+    <li>❌ <strong>Travazap</strong><br>É proibido o envio de mensagens com códigos que travem ou causem falhas no WhatsApp e/ou celulares de outros membros.</li>
+    <li>❌ <strong>Imposição Religiosa/Política</strong><br>Não é permitido impor ou forçar opiniões religiosas ou políticas. Respeitamos a diversidade de crenças e ideologias de todos os membros.</li>
+    <li>❌ <strong>Vídeos/Imagens Perturbadores</strong><br>Conteúdos que causem desconforto psicológico ou emocional não são permitidos, exceto em casos de gêneros como Analog Horror, que possuem um contexto artístico e são previamente avisados.</li>
+    <li>❌ <strong>Conteúdo Não Especificado</strong><br>Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
+    <li>❌ <strong>Não Ler as Regras</strong><br>É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo.</li>
+  </ul>
   <div class="counter">
     Usuários que leram as regras: <span id="user-count">0</span>
   </div>
-  <div class="rules">
-    <h2>❌ É PROIBIDO:</h2>
-    <ul>
-      <li><b>Menores de 15 anos:</b> A entrada de menores de 15 anos no grupo é proibida, para garantir que o conteúdo seja adequado à faixa etária do público.</li>
-      <li><b>Conteúdo Gore:</b> Imagens ou vídeos com violência extrema, mortes explícitas ou ferimentos gráficos não são permitidos.</li>
-      <li><b>Pornografia:</b> O envio de conteúdo pornográfico é proibido entre os horários das 05:00 às 20:00. Fora desse horário, o conteúdo será permitido apenas se estiver dentro dos padrões de respeito e consentimento.</li>
-      <li><b>Spam (não confundir com Flood):</b> É proibido o envio excessivo de mensagens irrelevantes, links promocionais ou conteúdo indesejado.<br>
-        <i>Nota:</i> Flood refere-se ao envio de mensagens em excesso, mas não necessariamente irrelevantes.
-      </li>
-      <li><b>Doxxing:</b> Divulgar informações pessoais de outros membros sem consentimento (ex.: nome completo, cpf, endereço, etc.) é estritamente proibido.</li>
-      <li><b>Travazap:</b> É proibido o envio de mensagens com códigos que travem ou causem falhas no WhatsApp e/ou celulares de outros membros.</li>
-      <li><b>Imposição Religiosa/Política:</b> Não é permitido impor ou forçar opiniões religiosas ou políticas. Respeitamos a diversidade de crenças e ideologias de todos os membros.</li>
-      <li><b>Vídeos/Imagens Perturbadores:</b> Conteúdos que causem desconforto psicológico ou emocional não são permitidos, exceto em casos de gêneros como Analog Horror, que possuem um contexto artístico e são previamente avisados.</li>
-      <li><b>Conteúdo Não Especificado:</b> Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
-      <li><b>Não Ler as Regras:</b> É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo. Use <b>/aceito</b> para aceitar as regras e liberar o acesso ao bot. Não fale deste comando para outros membros. Apenas diga-os para ler as regras.</li>
-    </ul>
-  </div>
   <script>
-    // Verifica se o usuário já visitou
-    const ipKey = "user-ip";
-    const userCountKey = "user-count";
-
-    async function getUserIP() {
-      const response = await fetch("https://api.ipify.org?format=json");
+    async function fetchUserCount() {
+      const response = await fetch('https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules');
       const data = await response.json();
-      return data.ip;
+      document.getElementById('user-count').innerText = data.value;
     }
-
-    async function updateUserCount() {
-      const ip = await getUserIP();
-      const storedIp = localStorage.getItem(ipKey);
-
-      if (storedIp !== ip) {
-        // Atualiza o contador de usuários únicos
-        const countResponse = await fetch("https://api.countapi.xyz/hit/bxssdxrk.github.com/dxrkrules");
-        const countData = await countResponse.json();
-        localStorage.setItem(ipKey, ip);
-        document.getElementById("user-count").innerText = countData.value;
-      } else {
-        const viewResponse = await fetch("https://api.countapi.xyz/get/bxssdxrk.github.com/dxrkrules");
-        const viewData = await viewResponse.json();
-        document.getElementById("user-count").innerText = viewData.value;
-      }
-    }
-
-    updateUserCount();
+    fetchUserCount();
   </script>
 </body>
 </html>
