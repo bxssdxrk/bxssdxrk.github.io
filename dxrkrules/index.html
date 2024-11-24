@@ -71,31 +71,53 @@
     </div>
   </div>
   <script>
-    document.getElementById('reveal-rules').addEventListener('click', function () {
-      // Revela as regras
-      document.getElementById('rules-container').classList.remove('hidden');
-      this.style.display = 'none';
+    const revealButton = document.getElementById('reveal-rules');
+    const rulesContainer = document.getElementById('rules-container');
+    const userCountElement = document.getElementById('user-count');
 
-      // Incrementa o contador no localStorage
-      const counterKey = 'rulesReadCount';
-      let currentCount = localStorage.getItem(counterKey);
-      if (!currentCount) {
-        currentCount = 0;
-      } else {
-        currentCount = parseInt(currentCount, 10);
+    // Função para buscar o contador atual
+    async function fetchCounter() {
+      const endpoint = 'https://api.countapi.xyz/get/bxssdxrk.github.io/dxrkrules';
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        return data.value || 0;
+      } catch (error) {
+        console.error('Erro ao buscar o contador:', error);
+        return 0;
       }
-      currentCount += 1;
-      localStorage.setItem(counterKey, currentCount);
+    }
 
-      // Atualiza o contador na tela
-      document.getElementById('user-count').innerText = currentCount;
+    // Função para incrementar o contador
+    async function incrementCounter() {
+      const endpoint = 'https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules';
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        return data.value;
+      } catch (error) {
+        console.error('Erro ao incrementar o contador:', error);
+        return null;
+      }
+    }
+
+    // Configurar o evento de clique
+    revealButton.addEventListener('click', async () => {
+      rulesContainer.classList.remove('hidden');
+      revealButton.style.display = 'none';
+
+      const updatedCount = await incrementCounter();
+      if (updatedCount !== null) {
+        userCountElement.innerText = updatedCount;
+      } else {
+        userCountElement.innerText = 'Erro ao carregar';
+      }
     });
 
-    // Carrega o valor atual do contador ao abrir a página
-    window.addEventListener('load', function () {
-      const counterKey = 'rulesReadCount';
-      const currentCount = localStorage.getItem(counterKey) || 0;
-      document.getElementById('user-count').innerText = currentCount;
+    // Atualizar contador ao carregar a página
+    window.addEventListener('load', async () => {
+      const currentCount = await fetchCounter();
+      userCountElement.innerText = currentCount;
     });
   </script>
 </body>
