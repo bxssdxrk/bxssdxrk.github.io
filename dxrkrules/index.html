@@ -31,38 +31,62 @@
       margin-top: 20px;
       font-size: 1.2em;
     }
+    .hidden {
+      display: none;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: white;
+      color: black;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: grey;
+    }
   </style>
 </head>
 <body>
   <h1>Regras</h1>
-  <ul>
-    <li>❌ <strong>Menores de 15 anos</strong><br>A entrada de menores de 15 anos no grupo é proibida, para garantir que o conteúdo seja adequado à faixa etária do público.</li>
-    <li>❌ <strong>Conteúdo Gore</strong><br>Imagens ou vídeos com violência extrema, mortes explícitas ou ferimentos gráficos não são permitidos.</li>
-    <li>❌ <strong>Pornografia</strong><br>O envio de conteúdo pornográfico é proibido entre os horários das 05:00 às 20:00. Fora desse horário, o conteúdo será permitido apenas se estiver dentro dos padrões de respeito e consentimento.</li>
-    <li>❌ <strong>Spam (não confundir com Flood)</strong><br>É proibido o envio excessivo de mensagens irrelevantes, links promocionais ou conteúdo indesejado.</li>
-    <li>❌ <strong>Doxxing</strong><br>Divulgar informações pessoais de outros membros sem consentimento (ex.: nome completo, cpf, endereço, etc.) é estritamente proibido.</li>
-    <li>❌ <strong>Travazap</strong><br>É proibido o envio de mensagens com códigos que travem ou causem falhas no WhatsApp e/ou celulares de outros membros.</li>
-    <li>❌ <strong>Imposição Religiosa/Política</strong><br>Não é permitido impor ou forçar opiniões religiosas ou políticas. Respeitamos a diversidade de crenças e ideologias de todos os membros.</li>
-    <li>❌ <strong>Vídeos/Imagens Perturbadores</strong><br>Conteúdos que causem desconforto psicológico ou emocional não são permitidos, exceto em casos de gêneros como Analog Horror, que possuem um contexto artístico e são previamente avisados.</li>
-    <li>❌ <strong>Conteúdo Não Especificado</strong><br>Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
-    <li>❌ <strong>Não Ler as Regras</strong><br>É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo.</li>
-  </ul>
-  <div class="counter">
-    Usuários que leram as regras: <span id="user-count">0</span>
+  <button id="reveal-rules">Clique aqui para revelar as regras</button>
+  <div id="rules-container" class="hidden">
+    <ul>
+      <li>❌ <strong>Menores de 15 anos</strong><br>A entrada de menores de 15 anos no grupo é proibida, para garantir que o conteúdo seja adequado à faixa etária do público.</li>
+      <li>❌ <strong>Conteúdo Gore</strong><br>Imagens ou vídeos com violência extrema, mortes explícitas ou ferimentos gráficos não são permitidos.</li>
+      <li>❌ <strong>Pornografia</strong><br>O envio de conteúdo pornográfico é proibido entre os horários das 05:00 às 20:00. Fora desse horário, o conteúdo será permitido apenas se estiver dentro dos padrões de respeito e consentimento.</li>
+      <li>❌ <strong>Spam (não confundir com Flood)</strong><br>É proibido o envio excessivo de mensagens irrelevantes, links promocionais ou conteúdo indesejado.</li>
+      <li>❌ <strong>Doxxing</strong><br>Divulgar informações pessoais de outros membros sem consentimento (ex.: nome completo, cpf, endereço, etc.) é estritamente proibido.</li>
+      <li>❌ <strong>Travazap</strong><br>É proibido o envio de mensagens com códigos que travem ou causem falhas no WhatsApp e/ou celulares de outros membros.</li>
+      <li>❌ <strong>Imposição Religiosa/Política</strong><br>Não é permitido impor ou forçar opiniões religiosas ou políticas. Respeitamos a diversidade de crenças e ideologias de todos os membros.</li>
+      <li>❌ <strong>Vídeos/Imagens Perturbadores</strong><br>Conteúdos que causem desconforto psicológico ou emocional não são permitidos, exceto em casos de gêneros como Analog Horror, que possuem um contexto artístico e são previamente avisados.</li>
+      <li>❌ <strong>Conteúdo Não Especificado</strong><br>Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
+      <li>❌ <strong>Não Ler as Regras</strong><br>É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo.</li>
+    </ul>
+    <div class="counter">
+      Usuários que leram as regras: <span id="user-count">0</span>
+    </div>
   </div>
   <script>
-  async function fetchUserCount() {
-    const endpoint = 'https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules';
-    try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      document.getElementById('user-count').innerText = data.value;
-    } catch (error) {
-      console.error('Erro ao buscar o contador:', error);
-      document.getElementById('user-count').innerText = 'Erro ao carregar';
-    }
-  }
-  fetchUserCount();
-</script>
+    document.getElementById('reveal-rules').addEventListener('click', async function () {
+      // Revela as regras
+      document.getElementById('rules-container').classList.remove('hidden');
+      this.style.display = 'none';
+
+      // Incrementa o contador
+      const endpoint = 'https://api.countapi.xyz/hit/bxssdxrk.github.io/dxrkrules';
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        document.getElementById('user-count').innerText = data.value;
+      } catch (error) {
+        console.error('Erro ao buscar o contador:', error);
+        document.getElementById('user-count').innerText = 'Erro ao carregar';
+      }
+    });
+  </script>
 </body>
 </html>
