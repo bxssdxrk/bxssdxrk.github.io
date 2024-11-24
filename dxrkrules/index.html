@@ -3,82 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Regras</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .main-text {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .sub-text {
-            font-size: 1rem;
-            position: absolute;
-            left: 20px;
-            bottom: 80px;
-        }
-        .counter {
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-            font-size: 1.2rem;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <title>Regras do Grupo</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-text">
-        Bem-vindo! Por favor, leia as regras abaixo.
+    <div class="container">
+        <h1>Regras</h1>
+        <div id="contador">
+            Usuários que leram as regras: <span id="contador-usuarios">0</span>
+        </div>
+        <div id="regras">
+            <ul>
+                <li><strong>❌ É PROIBIDO:</strong></li>
+                <li><strong>*Menores de 15 anos*</strong> - A entrada de menores de 15 anos no grupo é proibida...</li>
+                <li><strong>*Conteúdo Gore*</strong> - Imagens ou vídeos com violência extrema...</li>
+                <li><strong>*Pornografia*</strong> - O envio de conteúdo pornográfico...</li>
+                <li><strong>*Spam (não confundir com Flood)*</strong> - É proibido o envio excessivo...</li>
+                <li><strong>*Doxxing*</strong> - Divulgar informações pessoais...</li>
+                <li><strong>*Travazap*</strong> - É proibido o envio de mensagens...</li>
+                <li><strong>*Imposição Religiosa/Política*</strong> - Não é permitido impor opiniões...</li>
+                <li><strong>*Vídeos/Imagens Perturbadores*</strong> - Conteúdos que causem desconforto...</li>
+                <li><strong>*Conteúdo Não Especificado*</strong> - Qualquer comportamento ou conteúdo...</li>
+                <li><strong>*Não Ler as Regras*</strong> - Ignorar ou não cumprir as regras...</li>
+            </ul>
+        </div>
     </div>
-    <div class="sub-text">
-        Aqui estão as regras do nosso site. Por favor, siga-as para uma experiência melhor.
-    </div>
-    <div class="counter">
-        Usuários que leram as regras: <span id="user-count">0</span>
-    </div>
 
-    <script>
-        // Função para simular um IP único por visitante (pode ser substituída por um backend real)
-        function getUniqueVisitorId() {
-            return localStorage.getItem('visitorId');
-        }
-
-        // Função para incrementar o contador
-        function incrementVisitorCount() {
-            let visitorId = getUniqueVisitorId();
-            if (!visitorId) {
-                // Atribui um ID único ao visitante se não tiver
-                localStorage.setItem('visitorId', Date.now().toString());
-                let count = localStorage.getItem('visitorCount');
-                count = count ? parseInt(count) : 0;
-                localStorage.setItem('visitorCount', count + 1);
-            }
-        }
-
-        // Atualizar contador na página
-        function updateCounter() {
-            let count = localStorage.getItem('visitorCount') || 0;
-            document.getElementById('user-count').textContent = count;
-        }
-
-        // Executa as funções ao carregar a página
-        window.onload = () => {
-            incrementVisitorCount();
-            updateCounter();
-        };
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
