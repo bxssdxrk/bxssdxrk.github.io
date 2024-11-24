@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Regras</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .main-text {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .sub-text {
+            font-size: 1rem;
+            position: absolute;
+            left: 20px;
+            bottom: 80px;
+        }
+        .counter {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            font-size: 1.2rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-text">
+        Bem-vindo! Por favor, leia as regras abaixo.
+    </div>
+    <div class="sub-text">
+        Aqui estão as regras do nosso site. Por favor, siga-as para uma experiência melhor.
+    </div>
+    <div class="counter">
+        Usuários que leram as regras: <span id="user-count">0</span>
+    </div>
+
+    <script>
+        // Função para simular um IP único por visitante (pode ser substituída por um backend real)
+        function getUniqueVisitorId() {
+            return localStorage.getItem('visitorId');
+        }
+
+        // Função para incrementar o contador
+        function incrementVisitorCount() {
+            let visitorId = getUniqueVisitorId();
+            if (!visitorId) {
+                // Atribui um ID único ao visitante se não tiver
+                localStorage.setItem('visitorId', Date.now().toString());
+                let count = localStorage.getItem('visitorCount');
+                count = count ? parseInt(count) : 0;
+                localStorage.setItem('visitorCount', count + 1);
+            }
+        }
+
+        // Atualizar contador na página
+        function updateCounter() {
+            let count = localStorage.getItem('visitorCount') || 0;
+            document.getElementById('user-count').textContent = count;
+        }
+
+        // Executa as funções ao carregar a página
+        window.onload = () => {
+            incrementVisitorCount();
+            updateCounter();
+        };
+    </script>
+</body>
+</html>
