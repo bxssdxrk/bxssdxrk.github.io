@@ -22,7 +22,9 @@
     ul {
       list-style-type: none;
       padding: 0;
-      display: none; /* Regras escondidas inicialmente */
+      display: none; /* Inicialmente as regras estarão ocultas */
+      opacity: 0;
+      transition: opacity 0.5s ease; /* Adicionando a animação de fade */
     }
     li {
       margin-bottom: 10px;
@@ -32,26 +34,26 @@
       margin-top: 20px;
       font-size: 1.2em;
     }
-    .reveal-button {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      font-size: 1.2em;
+    .button {
       background-color: #444;
       color: white;
+      padding: 10px 20px;
       border: none;
       cursor: pointer;
+      font-size: 1.1em;
+      display: block;
+      margin: 0 auto 20px;
+      transition: background-color 0.3s ease;
     }
-    .reveal-button:hover {
+    .button:hover {
       background-color: #666;
     }
   </style>
 </head>
 <body>
   <h1>Regras</h1>
-  <button class="reveal-button" id="revealButton">Clique aqui para revelar as regras</button>
-  
-  <ul id="rulesList">
+  <button class="button" id="reveal-button">Revelar Regras</button> <!-- Botão para revelar as regras -->
+  <ul id="rules-list">
     <li>❌ <strong>Menores de 15 anos</strong><br>A entrada de menores de 15 anos no grupo é proibida, para garantir que o conteúdo seja adequado à faixa etária do público.</li>
     <li>❌ <strong>Conteúdo Gore</strong><br>Imagens ou vídeos com violência extrema, mortes explícitas ou ferimentos gráficos não são permitidos.</li>
     <li>❌ <strong>Pornografia</strong><br>O envio de conteúdo pornográfico é proibido entre os horários das 05:00 às 20:00. Fora desse horário, o conteúdo será permitido apenas se estiver dentro dos padrões de respeito e consentimento.</li>
@@ -63,45 +65,34 @@
     <li>❌ <strong>Conteúdo Não Especificado</strong><br>Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
     <li>❌ <strong>Não Ler as Regras</strong><br>É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo.</li>
   </ul>
-  
   <div class="counter">
     Usuários que leram as regras: <span id="user-count">0</span>
   </div>
-  
   <script>
-    // Função para carregar a contagem de acessos
-    async function fetchUserCount() {
-      const response = await fetch('counter.json');
-      const data = await response.json();
-      document.getElementById('user-count').innerText = data.count;
-    }
-
-    // Função para atualizar a contagem de acessos
-    async function incrementUserCount() {
-      const response = await fetch('counter.json');
-      const data = await response.json();
-      data.count += 1; // Incrementa a contagem
-
-      // Envia a nova contagem para o arquivo JSON
-      await fetch('counter.json', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      // Atualiza o contador na página
-      document.getElementById('user-count').innerText = data.count;
-    }
-
-    // Mostrar as regras e incrementar a contagem
-    document.getElementById('revealButton').addEventListener('click', function() {
-      document.getElementById('rulesList').style.display = 'block'; // Exibe as regras
-      incrementUserCount(); // Incrementa a contagem
+    // Função para revelar/ocultar as regras com animação de fade
+    document.getElementById('reveal-button').addEventListener('click', function() {
+      const rulesList = document.getElementById('rules-list');
+      if (rulesList.style.display === 'none' || rulesList.style.display === '') {
+        rulesList.style.display = 'block';  // Mostra as regras
+        setTimeout(() => {
+          rulesList.style.opacity = 1;  // Aplica o fade in
+        }, 10);
+        this.innerText = 'Ocultar Regras';  // Altera o texto do botão
+      } else {
+        rulesList.style.opacity = 0;  // Aplica o fade out
+        setTimeout(() => {
+          rulesList.style.display = 'none';  // Oculta as regras após o fade
+        }, 500); // Tempo para garantir que a animação de fade seja concluída
+        this.innerText = 'Revelar Regras';  // Altera o texto do botão
+      }
     });
 
-    // Inicializa o contador
+    // Função para atualizar o contador
+    async function fetchUserCount() {
+      const response = await fetch('https://api.countapi.xyz/hit/username.github.io/regras');
+      const data = await response.json();
+      document.getElementById('user-count').innerText = data.value;
+    }
     fetchUserCount();
   </script>
 </body>
