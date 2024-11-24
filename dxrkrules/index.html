@@ -29,11 +29,6 @@
     li {
       margin-bottom: 10px;
     }
-    .counter {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 1.2em;
-    }
     .button {
       background-color: #444;
       color: white;
@@ -65,9 +60,6 @@
     <li>❌ <strong>Conteúdo Não Especificado</strong><br>Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
     <li>❌ <strong>Não Ler as Regras</strong><br>É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo.</li>
   </ul>
-  <div class="counter">
-    Usuários que leram as regras: <span id="user-count">0</span>
-  </div>
   <script>
     // Função para revelar/ocultar as regras com animação de fade
     document.getElementById('reveal-button').addEventListener('click', function() {
@@ -86,14 +78,6 @@
         this.innerText = 'Revelar Regras';  // Altera o texto do botão
       }
     });
-
-    // Função para atualizar o contador
-    async function fetchUserCount() {
-      const response = await fetch('https://api.countapi.xyz/hit/username.github.io/regras');
-      const data = await response.json();
-      document.getElementById('user-count').innerText = data.value;
-    }
-    fetchUserCount();
   </script>
 </body>
 </html>
