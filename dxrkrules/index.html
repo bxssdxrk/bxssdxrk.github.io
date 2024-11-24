@@ -1,34 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regras do Grupo</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regras</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 15px;
+    }
+    .contador {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Regras</h1>
-        <div id="contador">
-            Usuários que leram as regras: <span id="contador-usuarios">0</span>
-        </div>
-        <div id="regras">
-            <ul>
-                <li><strong>❌ É PROIBIDO:</strong></li>
-                <li><strong>*Menores de 15 anos*</strong> - A entrada de menores de 15 anos no grupo é proibida...</li>
-                <li><strong>*Conteúdo Gore*</strong> - Imagens ou vídeos com violência extrema...</li>
-                <li><strong>*Pornografia*</strong> - O envio de conteúdo pornográfico...</li>
-                <li><strong>*Spam (não confundir com Flood)*</strong> - É proibido o envio excessivo...</li>
-                <li><strong>*Doxxing*</strong> - Divulgar informações pessoais...</li>
-                <li><strong>*Travazap*</strong> - É proibido o envio de mensagens...</li>
-                <li><strong>*Imposição Religiosa/Política*</strong> - Não é permitido impor opiniões...</li>
-                <li><strong>*Vídeos/Imagens Perturbadores*</strong> - Conteúdos que causem desconforto...</li>
-                <li><strong>*Conteúdo Não Especificado*</strong> - Qualquer comportamento ou conteúdo...</li>
-                <li><strong>*Não Ler as Regras*</strong> - Ignorar ou não cumprir as regras...</li>
-            </ul>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <h1>Regras</h1>
+  <ul>
+    <li><strong>❌ É PROIBIDO:</strong></li>
+    <li><strong>Menores de 15 anos</strong>: A entrada de menores de 15 anos no grupo é proibida, para garantir que o conteúdo seja adequado à faixa etária do público.</li>
+    <li><strong>Conteúdo Gore</strong>: Imagens ou vídeos com violência extrema, mortes explícitas ou ferimentos gráficos não são permitidos.</li>
+    <li><strong>Pornografia</strong>: O envio de conteúdo pornográfico é proibido entre os horários das 05:00 às 20:00. Fora desse horário, o conteúdo será permitido apenas se estiver dentro dos padrões de respeito e consentimento.</li>
+    <li><strong>Spam (não confundir com Flood)</strong>: É proibido o envio excessivo de mensagens irrelevantes, links promocionais ou conteúdo indesejado. <em>Nota</em>: Flood refere-se ao envio de mensagens em excesso, mas não necessariamente irrelevantes.</li>
+    <li><strong>Doxxing</strong>: Divulgar informações pessoais de outros membros sem consentimento (ex.: nome completo, CPF, endereço, etc.) é estritamente proibido.</li>
+    <li><strong>Travazap</strong>: É proibido o envio de mensagens com códigos que travem ou causem falhas no WhatsApp e/ou celulares de outros membros.</li>
+    <li><strong>Imposição Religiosa/Política</strong>: Não é permitido impor ou forçar opiniões religiosas ou políticas. Respeitamos a diversidade de crenças e ideologias de todos os membros.</li>
+    <li><strong>Vídeos/Imagens Perturbadores</strong>: Conteúdos que causem desconforto psicológico ou emocional não são permitidos, exceto em casos de gêneros como Analog Horror, que possuem um contexto artístico e são previamente avisados.</li>
+    <li><strong>Conteúdo Não Especificado</strong>: Qualquer comportamento ou conteúdo que os administradores considerem inadequados para o bom funcionamento do grupo também será proibido, a critério dos administradores.</li>
+    <li><strong>Não Ler as Regras</strong>: É obrigatório que todos os membros leiam as regras do grupo. Ignorar ou não cumprir as regras será motivo para advertência ou remoção do grupo. Use <code>/aceito</code> para aceitar as regras e liberar o acesso ao bot. Não fale deste comando para outros membros. Apenas diga-os para ler as regras.</li>
+  </ul>
+  <div class="contador">
+    <span id="contador">Carregando...</span>
+  </div>
+  <script src="contador.js"></script>
 </body>
 </html>
