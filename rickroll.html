@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <title>Rickroll</title>
   <style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent; /* Remove highlight azul no mobile */
+    }
+
     body {
       margin: 0;
       background-color: black;
@@ -35,7 +43,7 @@
 <body onclick="iniciar()">
 
   <video id="video" loop>
-    <source src="video.mp4" type="video/mp4">
+    <source src="rickroll.mp4" type="video/mp4">
     Seu navegador não suporta vídeos incorporados.
   </video>
 
