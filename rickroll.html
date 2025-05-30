@@ -1,90 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> </title>
-    <style>
-        body {
-            background-color: #000;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        video {
-            max-width: 100%;
-            max-height: 80vh;
-        }
-        
-        #message {
-            color: #fff;
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-            opacity: 0;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-            transition: opacity 0.5s ease-in-out;
-        }
-        
-        @media (max-width: 768px) {
-            video {
-                max-height: 60vh;
-            }
-            
-            #message {
-                font-size: 1.8rem;
-                margin-top: 15px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <video id="video" autoplay playsinline muted>
-        <source src="video.mp4" type="video/mp4">
-    </video>
-    <div id="message">Você foi rickrolled!</div>
+<html>
+   <body>
+       <video autoplay loop width="100%">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const video = document.getElementById('video');
-            const message = document.getElementById('message');
-            
-            // Estratégia para autoplay com som
-            video.muted = true; // Começa mudo para garantir autoplay
-            
-            // Tenta iniciar o vídeo
-            const playPromise = video.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Sucesso: ativa o som e coloca volume máximo
-                    video.muted = false;
-                    video.volume = 1.0;
-                    
-                    // Mostra a mensagem após 1 segundo
-                    setTimeout(() => {
-                        message.style.opacity = '1';
-                    }, 1000);
-                }).catch(error => {
-                    // Fallback: tenta novamente sem som inicial
-                    video.muted = true;
-                    video.play().then(() => {
-                        video.muted = false;
-                        video.volume = 1.0;
-                        setTimeout(() => {
-                            message.style.opacity = '1';
-                        }, 1000);
-                    });
-                });
-            }
-        });
-    </script>
-</body>
+    <source src="rickroll.mp4"
+            type="video/mp4">
+
+    Sorry, your browser doesn't support embedded videos.
+</video>
+      <script>
+         // Change the variables below to your liking
+         const currentURL = "rickroll.mp4";
+         const pageTitle = "Loading...";
+         // End of changable variables
+         
+         function setTitle() {
+            document.title = pageTitle;
+         }
+         
+         function redirect() {
+            window.location.href = currentURL;
+         }
+         
+         function onload() {
+            setTitle();
+            redirect();
+         }
+         
+         window.onload = onload();
+       </script>
+   </body>
 </html>
