@@ -1,57 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Rickroll</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      flex-direction: column;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rickroll</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    video {
-      width: 100%;
-      height: auto;
-      background-color: black;
-    }
+        video {
+            max-width: 90%;
+            max-height: 80vh;
+        }
 
-    #texto {
-      color: white;
-      font-size: 24px;
-      margin-top: 20px;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-  </style>
+        #message {
+            color: white;
+            font-size: 24px;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+    </style>
 </head>
 <body>
+    <video autoplay playsinline controls volume="1">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+    <div id="message">Você foi rickrolled!</div>
 
-  <video id="video" src="video.mp4" autoplay loop></video>
-  <div id="texto">Você foi rickrolled!</div>
-
-  <script>
-    const video = document.getElementById('video');
-    const texto = document.getElementById('texto');
-
-    // Volume máximo
-    video.volume = 1.0;
-
-    // Desmutar e garantir execução
-    video.muted = false;
-    video.play();
-
-    // Mostrar texto após 1 segundo
-    setTimeout(() => {
-      texto.style.opacity = 1;
-    }, 1000);
-  </script>
-
+    <script>
+        // Configura o volume máximo e ativa o som
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('video');
+            video.volume = 1.0;
+            
+            // Mostra a mensagem após 1 segundo
+            setTimeout(function() {
+                document.getElementById('message').style.opacity = '1';
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
