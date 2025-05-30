@@ -1,33 +1,55 @@
 <!DOCTYPE html>
 <html>
-   <body>
-       <video autoplay loop width="100%">
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
 
-    <source src="video.mp4"
-            type="video/mp4">
+      video {
+        width: 100%;
+        height: auto;
+      }
 
-    Sorry, your browser doesn't support embedded videos.
-</video>
-      <script>
-         // Change the variables below to your liking
-         const currentURL = "video.mp4";
-         const pageTitle = "Loading...";
-         // End of changable variables
-         
-         function setTitle() {
-            document.title = pageTitle;
-         }
-         
-         function redirect() {
-            window.location.href = currentURL;
-         }
-         
-         function onload() {
-            setTitle();
-            redirect();
-         }
-         
-         window.onload = onload();
-       </script>
-   </body>
+      #texto {
+        color: white;
+        font-size: 24px;
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+    </style>
+  </head>
+
+  <body>
+    <video id="video" autoplay loop>
+      <source src="video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos incorporados.
+    </video>
+
+    <div id="texto">Você foi rickrolled!</div>
+
+    <script>
+      const video = document.getElementById('video');
+      const texto = document.getElementById('texto');
+
+      // Força autoplay com som no WebView
+      video.volume = 1.0;
+      video.muted = false;
+      video.play();
+
+      // Exibe o texto após 1 segundo
+      setTimeout(() => {
+        texto.style.opacity = 1;
+      }, 1000);
+    </script>
+  </body>
 </html>
