@@ -3,143 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rickroll!</title>
+    <title>Conteúdo Importante</title>
     <style>
-        body {
-            background-color: black;
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
         
-        #video-container {
-            position: relative;
-            width: 80%;
+        body {
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s;
+        }
+        
+        .container {
+            text-align: center;
             max-width: 800px;
+            padding: 20px;
+            z-index: 10;
+        }
+        
+        .loading-container {
+            color: #fff;
+            margin-bottom: 30px;
+        }
+        
+        .loading-text {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+        
+        .message {
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 30px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50px;
+            transform: translateY(20px);
+        }
+        
+        .video-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            max-height: 80vh;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 5;
         }
         
         video {
             width: 100%;
+            height: auto;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
         }
         
-        #message {
-            color: white;
-            font-size: 32px;
-            margin-top: 30px;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            color: #666;
+            font-size: 14px;
             text-align: center;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            font-weight: bold;
-            padding: 15px 30px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 50px;
+            width: 100%;
+            opacity: 0.7;
         }
         
-        #instructions {
-            color: #aaa;
-            font-size: 18px;
-            margin-top: 20px;
-            text-align: center;
-            max-width: 80%;
-            opacity: 0.8;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        #play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
-            transition: all 0.3s;
-        }
-        
-        #play-btn:hover {
-            background-color: #ff3333;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        .visible {
+            opacity: 1 !important;
         }
     </style>
 </head>
 <body>
-    <div id="video-container">
-        <video id="video" playsinline>
-            <source src="video.mp4" type="video/mp4">
-        </video>
-        <button id="play-btn" class="pulse">▶ REPRODUZIR</button>
+    <div class="container">
+        <div class="loading-container">
+            <div class="loading-text">Carregando conteúdo importante...</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+        <div class="message" id="message">Você foi rickrolled!</div>
     </div>
     
-    <div id="message">Você foi rickrolled!</div>
-    <div id="instructions">Se o vídeo não iniciar automaticamente, clique no botão acima</div>
+    <div class="video-container" id="video-container">
+        <video id="video" playsinline>
+            <source src="video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+    </div>
+    
+    <div class="footer">
+        © 2023 - Todos os direitos reservados
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.getElementById('video');
-            const playBtn = document.getElementById('play-btn');
+            const videoContainer = document.getElementById('video-container');
             const message = document.getElementById('message');
-            const instructions = document.getElementById('instructions');
+            const progress = document.getElementById('progress');
             
-            // Configura o volume máximo
-            video.volume = 1.0;
+            // Simular carregamento para disfarçar
+            let progressValue = 0;
+            const progressInterval = setInterval(() => {
+                progressValue += 2;
+                progress.style.width = progressValue + '%';
+                
+                if (progressValue >= 100) {
+                    clearInterval(progressInterval);
+                    // Esconder elementos de carregamento
+                    document.querySelector('.loading-container').style.opacity = 0;
+                    
+                    // Mostrar o vídeo e iniciar reprodução
+                    setTimeout(() => {
+                        videoContainer.classList.add('visible');
+                        startVideo();
+                    }, 300);
+                }
+            }, 50);
             
-            // Tenta iniciar o vídeo automaticamente
-            const playPromise = video.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Autoplay funcionou - esconde o botão
-                    playBtn.classList.add('hidden');
-                }).catch(error => {
-                    // Autoplay falhou - mostra o botão
-                    playBtn.classList.remove('hidden');
-                    instructions.classList.remove('hidden');
-                });
+            function startVideo() {
+                // Configurar volume máximo
+                video.volume = 1.0;
+                
+                // Tentar reproduzir automaticamente
+                const playPromise = video.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Sucesso na reprodução
+                    }).catch(error => {
+                        // Tentar novamente após um pequeno atraso
+                        setTimeout(() => {
+                            video.play().catch(e => console.log('Autoplay falhou:', e));
+                        }, 500);
+                    });
+                }
+                
+                // Mostrar a mensagem após 1 segundo
+                setTimeout(() => {
+                    message.classList.add('visible');
+                }, 1000);
             }
             
-            // Configura o botão de play manual
-            playBtn.addEventListener('click', function() {
-                video.play();
-                playBtn.classList.add('hidden');
-                instructions.classList.add('hidden');
-            });
-            
-            // Mostra a mensagem após 1 segundo
-            setTimeout(function() {
-                message.style.opacity = '1';
-            }, 1000);
-            
-            // Tenta ativar o som quando o vídeo começar a tocar
-            video.addEventListener('playing', function() {
-                video.volume = 1.0;
+            // Redimensionar vídeo ao mudar tamanho da janela
+            window.addEventListener('resize', () => {
+                videoContainer.style.maxWidth = Math.min(window.innerWidth - 40, 800) + 'px';
             });
         });
     </script>
