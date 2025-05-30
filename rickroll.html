@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rickroll</title>
+    <title>Rickroll!</title>
     <style>
         body {
             background-color: black;
@@ -15,38 +15,132 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            font-family: Arial, sans-serif;
         }
-
+        
+        #video-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+        }
+        
         video {
-            max-width: 90%;
-            max-height: 80vh;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
-
+        
         #message {
             color: white;
-            font-size: 24px;
-            margin-top: 20px;
+            font-size: 32px;
+            margin-top: 30px;
             opacity: 0;
-            transition: opacity 0.5s;
+            transition: opacity 1s ease-in-out;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            font-weight: bold;
+            padding: 15px 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50px;
+        }
+        
+        #instructions {
+            color: #aaa;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+            max-width: 80%;
+            opacity: 0.8;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        #play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s;
+        }
+        
+        #play-btn:hover {
+            background-color: #ff3333;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
         }
     </style>
 </head>
 <body>
-    <video autoplay playsinline controls volume="1">
-        <source src="video.mp4" type="video/mp4">
-    </video>
+    <div id="video-container">
+        <video id="video" playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <button id="play-btn" class="pulse">▶ REPRODUZIR</button>
+    </div>
+    
     <div id="message">Você foi rickrolled!</div>
+    <div id="instructions">Se o vídeo não iniciar automaticamente, clique no botão acima</div>
 
     <script>
-        // Configura o volume máximo e ativa o som
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('video');
+            const video = document.getElementById('video');
+            const playBtn = document.getElementById('play-btn');
+            const message = document.getElementById('message');
+            const instructions = document.getElementById('instructions');
+            
+            // Configura o volume máximo
             video.volume = 1.0;
+            
+            // Tenta iniciar o vídeo automaticamente
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay funcionou - esconde o botão
+                    playBtn.classList.add('hidden');
+                }).catch(error => {
+                    // Autoplay falhou - mostra o botão
+                    playBtn.classList.remove('hidden');
+                    instructions.classList.remove('hidden');
+                });
+            }
+            
+            // Configura o botão de play manual
+            playBtn.addEventListener('click', function() {
+                video.play();
+                playBtn.classList.add('hidden');
+                instructions.classList.add('hidden');
+            });
             
             // Mostra a mensagem após 1 segundo
             setTimeout(function() {
-                document.getElementById('message').style.opacity = '1';
+                message.style.opacity = '1';
             }, 1000);
+            
+            // Tenta ativar o som quando o vídeo começar a tocar
+            video.addEventListener('playing', function() {
+                video.volume = 1.0;
+            });
         });
     </script>
 </body>
