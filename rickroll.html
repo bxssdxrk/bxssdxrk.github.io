@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <title>Rickroll</title>
@@ -10,51 +9,53 @@
       -ms-user-select: none;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-    }
+    }body {
+  margin: 0;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  cursor: pointer;
+}
 
-    body {
-      margin: 0;
-      background-color: black;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      cursor: pointer;
-    }
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    video {
-      width: 100%;
-      height: auto;
-      display: none;
-    }
+#texto {
+  color: white;
+  font-size: 24px;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
 
-    #texto {
-      color: white;
-      font-size: 24px;
-      margin-top: 20px;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
+#botao {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
   </style>
-</head>
-
-<body onclick="iniciar()">
-
-  <video id="video" loop>
+</head><body onclick="iniciar()">  <video id="video" loop muted>
     <source src="video.mp4" type="video/mp4">
     Seu navegador não suporta vídeos incorporados.
-  </video>
-
-  <div id="texto">Você foi rickrolled!</div>
-
-  <script>
+  </video>  <div id="texto">Você foi rickrolled!</div>
+  <button id="botao">ENTRAR</button>  <script>
     function iniciar() {
       const video = document.getElementById('video');
       const texto = document.getElementById('texto');
+      const botao = document.getElementById('botao');
 
-      video.style.display = 'block';
       video.volume = 1.0;
       video.muted = false;
       video.play();
@@ -64,8 +65,7 @@
       }, 1000);
 
       document.body.onclick = null;
+      botao.style.display = 'none';
     }
-  </script>
-
-</body>
+  </script></body>
 </html>
