@@ -9,7 +9,7 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      -webkit-tap-highlight-color: transparent; /* Remove highlight azul no mobile */
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -54,22 +54,15 @@
       const video = document.getElementById('video');
       const texto = document.getElementById('texto');
 
-      // Mostra o vídeo
       video.style.display = 'block';
-
-      // Configurações de áudio
       video.volume = 1.0;
       video.muted = false;
-
-      // Inicia o vídeo
       video.play();
 
-      // Mostra o texto depois de 1 segundo
       setTimeout(() => {
         texto.style.opacity = 1;
       }, 1000);
 
-      // Remove o clique após iniciar
       document.body.onclick = null;
     }
   </script>
