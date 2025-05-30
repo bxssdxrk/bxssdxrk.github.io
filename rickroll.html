@@ -1,55 +1,70 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <style>
-      body {
-        margin: 0;
-        background-color: black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-      }
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Rickroll</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      cursor: pointer;
+    }
 
-      video {
-        width: 100%;
-        height: auto;
-      }
+    video {
+      width: 100%;
+      height: auto;
+      display: none;
+    }
 
-      #texto {
-        color: white;
-        font-size: 24px;
-        margin-top: 20px;
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-    </style>
-  </head>
+    #texto {
+      color: white;
+      font-size: 24px;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
 
-  <body>
-    <video id="video" autoplay loop>
-      <source src="video.mp4" type="video/mp4">
-      Seu navegador não suporta vídeos incorporados.
-    </video>
+<body onclick="iniciar()">
 
-    <div id="texto">Você foi rickrolled!</div>
+  <video id="video" loop>
+    <source src="video.mp4" type="video/mp4">
+    Seu navegador não suporta vídeos incorporados.
+  </video>
 
-    <script>
+  <div id="texto">Você foi rickrolled!</div>
+
+  <script>
+    function iniciar() {
       const video = document.getElementById('video');
       const texto = document.getElementById('texto');
 
-      // Força autoplay com som no WebView
+      // Mostra o vídeo
+      video.style.display = 'block';
+
+      // Configurações de áudio
       video.volume = 1.0;
       video.muted = false;
+
+      // Inicia o vídeo
       video.play();
 
-      // Exibe o texto após 1 segundo
+      // Mostra o texto depois de 1 segundo
       setTimeout(() => {
         texto.style.opacity = 1;
       }, 1000);
-    </script>
-  </body>
+
+      // Remove o clique após iniciar
+      document.body.onclick = null;
+    }
+  </script>
+
+</body>
 </html>
