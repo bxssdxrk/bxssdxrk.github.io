@@ -11,5 +11,18 @@
       "1": "000000"
     },
     "tags": []
+  },
+  {
+    "id": "ultra-long",
+    "category": "hairs",
+    "name": "Ultra Longo",
+    "enabled": true,
+    "texturePath": "./assets/hairs/2.png",
+    "modelPart": "head",
+    "colorMap": [],
+    "defaultColor": {
+      "1": "000000"
+    },
+    "tags": []
   }
 ]

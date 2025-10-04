@@ -1,27 +1,51 @@
-// app.js (Versão Final com Gerenciamento de Estado)
+// app.js
 
-/**
- * Objeto de estado global para rastrear os acessórios aplicados.
- * Chave: modelPart (ex: 'head'), Valor: Objeto JSON do item.
- */
+// Ordem de renderização, do mais baixo (desenhar primeiro) para o mais alto (desenhar por último)
+const RENDER_ORDER = [
+    'shoes',
+    'socks',
+    'underwears',
+    'pants',
+    'pants-accessories',
+    'shirts',
+    't-shirts',
+    'torso-accessories',
+    'mouths',
+    'eyes',
+    'eyebrows',
+    'hairs',
+    'face-accessories',
+    'head-accessories',
+    'hats'
+];
+
 let appliedAccessories = {}; 
 
 /**
  * Função responsável por fundir a skin base + TODOS os acessórios ativos e renderizar.
  */
+// app.js (Função renderAllAccessories CORRIGIDA)
+
 async function renderAllAccessories() {
     const viewer = window.skinViewer;
     
-    // 1. Encontrar a skin base correta (Steve ou Alex)
+    // 1. Encontrar a skin base correta
     const currentModelConfig = (viewer.playerModel === 'slim') 
         ? config.DEFAULT_SLIM_SKIN_FILE 
         : config.DEFAULT_SKIN_FILE;
     const baseSkinUrl = config.SKIN_BASE_URL + currentModelConfig;
 
-    // 2. Coletar as URLs de textura de TODOS os acessórios no estado
+    // 2. Coletar e ORDENAR as URLs de textura
     const accessoryUrls = Object.values(appliedAccessories)
-        // Ordenar garante que os acessórios sempre se sobreponham na mesma ordem, se houver.
-        .sort((a, b) => a.modelPart.localeCompare(b.modelPart)) 
+        .sort((a, b) => {
+            // Encontra a posição de cada categoria no array RENDER_ORDER.
+            // Os itens com índice menor (que estão no início do array, como 'shoes')
+            // serão desenhados PRIMEIRO.
+            const indexA = RENDER_ORDER.indexOf(a.category);
+            const indexB = RENDER_ORDER.indexOf(b.category);
+            
+            return indexA - indexB; 
+        })
         .map(item => item.texturePath);
     
     // 3. Fundir a skin base com TODOS os acessórios
@@ -31,9 +55,23 @@ async function renderAllAccessories() {
     viewer.loadSkin(newMergedSkinUrl);
 }
 
-// ...
-// O restante da função renderItemList (que você já tinha definido)
-// ...
+function setupCategoryToggles() {
+    const headers = document.querySelectorAll('.category-header');
+    
+    headers.forEach(header => {
+        header.addEventListener('click', () => {
+            // Pega o ID da div de conteúdo que deve ser exibida/ocultada
+            const targetId = header.dataset.target;
+            const targetContent = document.getElementById(targetId);
+            
+            if (targetContent) {
+                // A função .toggle() adiciona a classe se ela não existir, e remove se ela existir.
+                targetContent.classList.toggle('collapsed');
+            }
+        });
+    });
+}
+
 function renderItemList(items) {
     const itemsHtml = items.map(item => {
       return `
@@ -41,7 +79,8 @@ function renderItemList(items) {
         ${item.name}
       </button>`;
     }).join(''); 
-        // A categoria precisa ser definida UMA VEZ.
+    
+    // A categoria precisa ser definida UMA VEZ.
     const containerId = `${items[0].category}-list`; // Pega a categoria do primeiro item.
     const container = document.getElementById(containerId);
 
@@ -49,7 +88,6 @@ function renderItemList(items) {
     container.innerHTML = itemsHtml;
 }
 
-// app.js (Bloco DOMContentLoaded com ordem corrigida)
 // O bloco principal de inicialização
 document.addEventListener('DOMContentLoaded', async () => {
     
@@ -72,6 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderItemList(eyes);
     renderItemList(shirts);
     renderItemList(pants);
+    setupCategoryToggles();
     
     // 3. CONFIGURAR LISTENERS (ESTE BLOCO VEM DEPOIS)
     const allItems = [
@@ -92,20 +131,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         button.addEventListener('click', async () => {
             const clickedId = button.dataset.itemId; 
             const itemToApply = allItems.find(item => item.id === clickedId);
-            const partKey = itemToApply.modelPart;
             
-            // Lógica de Estado
-            if (appliedAccessories[partKey] && appliedAccessories[partKey].id === clickedId) {
-                delete appliedAccessories[partKey];
+            const stateKey = itemToApply.category; 
+            
+            // Verificamos se o item *naquela categoria* já está selecionado
+            if (appliedAccessories[stateKey] && appliedAccessories[stateKey].id === clickedId) {
+                // TOGGLE: Se já estiver ativo, remova a chave de CATEGORIA
+                delete appliedAccessories[stateKey];
                 console.log(`Removido: ${itemToApply.name}`);
             } else {
-                appliedAccessories[partKey] = itemToApply;
-                console.log(`Aplicado: ${itemToApply.name} (Substituindo item anterior na parte: ${partKey})`);
+                // SUBSTITUIÇÃO: Adiciona/Substitui o item na chave de CATEGORIA
+                appliedAccessories[stateKey] = itemToApply;
+                console.log(`Aplicado: ${itemToApply.name} (Substituindo item anterior na categoria: ${stateKey})`);
             }
             
             await renderAllAccessories();
         });
     });
+
     
     const loadingText = document.querySelector('.loading-text');
     if (loadingText) loadingText.remove();

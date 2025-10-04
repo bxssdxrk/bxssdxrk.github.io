@@ -20,9 +20,9 @@
     ]
   },
   {
-    "id": "hat2",
+    "id": "little-touca",
     "category": "hats",
-    "name": "Outro Chaléu",
+    "name": "Touquinha",
     "enabled": true,
     "texturePath": "./assets/hats/2.png",
     "modelPart": "head",
@@ -32,11 +32,21 @@
       "2": "ffffff",
       "3": "000000"
     }, 
-    "tags": [
-      "keffiyeh", 
-      "kufiya", 
-      "ghutra", 
-      "shemagh"
-    ]
+    "tags": []
+  },
+  {
+    "id": "simple-headset",
+    "category": "hats",
+    "name": "Headset Simples",
+    "enabled": true,
+    "texturePath": "./assets/hats/3.png",
+    "modelPart": "head",
+    "colorMap": [], 
+    "defaultColor": {
+      "1": "ff0000",
+      "2": "ffffff",
+      "3": "000000"
+    }, 
+    "tags": []
   }
 ]

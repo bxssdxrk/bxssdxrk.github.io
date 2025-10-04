@@ -118,6 +118,20 @@ body {
     background-color: #8B8B8B; /* Fundo interno do painel */
 }
 
+.item-list-content.collapsed {
+    display: none;
+}
+
+/* Opcional: Estilo para dar um visual de botão/clicável ao cabeçalho */
+.category-header {
+    cursor: pointer;
+    background-color: #444; /* Cor de fundo escura */
+    padding: 10px;
+    border: 1px solid #222;
+    margin-top: 5px;
+}
+
+
 /* Área de Preview (Direita) */
 #preview-area {
     flex-grow: 1;

@@ -11,5 +11,18 @@
       "1": "000000"
     }, 
     "tags": []
+  },
+  {
+    "id": "shorts",
+    "category": "pants",
+    "name": "Shorts",
+    "enabled": true,
+    "texturePath": "./assets/pants/2.png",
+    "modelPart": "legs",
+    "colorMap": [], 
+    "defaultColor": {
+      "1": "FFFFFF"
+    }, 
+    "tags": []
   }
 ]

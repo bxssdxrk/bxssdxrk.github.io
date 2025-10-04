@@ -1,72 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor de Skins Minecraft</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="app-container">
-        <header id="top-controls">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Editor de Skins Minecraft</title>
+      <link rel="stylesheet" href="style.css">
+   </head>
+   <body>
+      <div id="app-container">
+         <header id="top-controls">
             <button class="mc-button dev-button" id="dev-tools-button">🛠️ Ferramentas Dev</button>
             <button class="mc-button reset-button">🔄 Reiniciar Skin</button>
-        </header>
-
-        <main id="main-content">
+         </header>
+         <main id="main-content">
             <aside id="item-grid-container" class="mc-panel">
-                <div class="panel-header">Catálogo de Peças</div>
-                <div id="item-grid-wrapper">
-                    <section id="head-editor">
-                      <h2>Chapéu</h2>
-                      <div id="hats-list"></div>
-                    </section>
-                    <section id="hair-editor">
-                      <h2>Cabelo</h2>
-                      <div id="hairs-list"></div>
-                    </section>
-                    <section id="eyes-editor">
-                        <h2>Olhos</h2>
-                        <div id="eyes-list"></div>
-                    </section>
-                    <section id="shirts-editor">
-                      <h2>Camisa</h2>
-                      <div id="shirts-list"></div>
-                    </section>
-                    <section id="pants-editor">
-                        <h2>Calças</h2>
-                        <div id="pants-list"></div>
-                    </section>
-                    <p class="loading-text">Carregando itens...</p>
-                </div>
+               <div class="panel-header">Catálogo de Peças</div>
+               <div id="item-grid-wrapper">
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="hats-list">Chapéu</h2>
+                     <div id="hats-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="head-accessories-list">Acessório de Cabeça</h2>
+                     <div id="head-accessories-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="hairs-list">Cabelo</h2>
+                     <div id="hairs-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="eyebrows-list">Sobrancelhas</h2>
+                     <div id="eyebrows-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="eyes-list">Olhos</h2>
+                     <div id="eyes-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="mouths-list">Boca</h2>
+                     <div id="mouths-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="face-accessories-list">Acessório de Rosto</h2>
+                     <div id="face-accessories-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="shirts-list">Camisa</h2>
+                     <div id="shirts-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="t-shirts-list">Camiseta</h2>
+                     <div id="t-shirts-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="torso-accessories-list">Acessório de Tronco</h2>
+                     <div id="torso-accessories-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="underwears-list">Roupa Íntima</h2>
+                     <div id="underwears-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="pants-list">Calças</h2>
+                     <div id="pants-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="pants-accessories-list">Acessório de Calça</h2>
+                     <div id="pants-accessories-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="socks-list">Meias</h2>
+                     <div id="socks-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <section class="category-section">
+                     <h2 class="category-header" data-target="shoes-list">Sapatos</h2>
+                     <div id="shoes-list" class="item-list-content collapsed"></div>
+                  </section>
+                  <p class="loading-text">Carregando itens...</p>
+               </div>
             </aside>
-
             <section id="preview-area">
-                <canvas id="skin-viewer"></canvas>
-                
-                <footer id="bottom-controls">
-                    <div id="skin-type-toggle">
-                        <span class="type-label">Steve (Largo)</span>
-                        <label class="switch">
-                            <input type="checkbox" id="slim-toggle">
-                            <span class="slider"></span>
-                        </label>
-                        <span class="type-label">Alex (Fino)</span>
-                    </div>
-
-                    <button class="mc-button view-2d-button">🖼️ Ver Textura 2D</button>
-                    <button class="mc-button download-button">💾 Baixar Skin</button>
-                    <button class="mc-button share-button">🔗 Compartilhar</button>
-                </footer>
+               <canvas id="skin-viewer"></canvas>
+               <footer id="bottom-controls">
+                  <div id="skin-type-toggle">
+                     <span class="type-label">Steve (Largo)</span>
+                     <label class="switch">
+                     <input type="checkbox" id="slim-toggle">
+                     <span class="slider"></span>
+                     </label>
+                     <span class="type-label">Alex (Fino)</span>
+                  </div>
+                  <button class="mc-button view-2d-button">🖼️ Ver Textura 2D</button>
+                  <button class="mc-button download-button">💾 Baixar Skin</button>
+                  <button class="mc-button share-button">🔗 Compartilhar</button>
+               </footer>
             </section>
-        </main>
-    </div>
-    <script src="https://unpkg.com/three@0.134.0/build/three.min.js"></script>
-    <script src="https://unpkg.com/skinview3d@3.4.1/bundles/skinview3d.bundle.js"></script> 
-    <script src="textureMerger.js"></script> 
-    <script src="dataLoader.js"></script>
-    <script src="preview3D.js"></script>
-    <script src="config.js"></script>
-    <script src="app.js"></script>
-  </body>
+         </main>
+      </div>
+      <script src="https://unpkg.com/three@0.134.0/build/three.min.js"></script>
+      <script src="https://unpkg.com/skinview3d@3.4.1/bundles/skinview3d.bundle.js"></script> 
+      <script src="textureMerger.js"></script> 
+      <script src="dataLoader.js"></script>
+      <script src="preview3D.js"></script>
+      <script src="config.js"></script>
+      <script src="app.js"></script>
+   </body>
 </html>
