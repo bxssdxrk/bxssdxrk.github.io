@@ -1,0 +1,180 @@
+/* Importando uma fonte pixelada comum para o estilo Minecraft */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    /* Cores do GUI do Minecraft */
+    --mc-dark-gray: #1E1E1E;
+    --mc-light-gray: #C6C6C6;
+    --mc-border-dark: #000000;
+    --mc-border-light: #FFFFFF;
+    --mc-button-bg: #8B8B8B;
+    --mc-button-hover: #A0A0A0;
+    --mc-text-color: #FFFFFF;
+    --mc-green-text: #55FF55; /* Cor para destaque, como títulos */
+    --mc-panel-bg: #C6C6C6; /* Painéis mais claros */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace; /* Aplica a fonte pixel */
+    background-color: var(--mc-dark-gray);
+    color: var(--mc-text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#app-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+    border: 3px solid var(--mc-border-dark);
+    box-shadow: 6px 6px 0 var(--mc-border-dark);
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo sutil */
+}
+
+/* Layout Principal (Grid e Preview) */
+#main-content {
+    display: flex;
+    flex-grow: 1;
+    gap: 15px;
+    padding: 10px;
+}
+
+/* Painel Geral (Estilo Minecraft) */
+.mc-panel {
+    border-top: 2px solid var(--mc-border-light);
+    border-left: 2px solid var(--mc-border-light);
+    border-bottom: 2px solid var(--mc-border-dark);
+    border-right: 2px solid var(--mc-border-dark);
+    background-color: var(--mc-panel-bg);
+    padding: 5px;
+}
+
+.panel-header {
+    background-color: var(--mc-dark-gray);
+    color: var(--mc-green-text);
+    padding: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    border: 1px solid var(--mc-border-light);
+    font-size: 18px;
+}
+
+/* Estilo dos Botões (Fiel ao Minecraft) */
+.mc-button {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    padding: 8px 16px;
+    background-color: var(--mc-button-bg);
+    color: var(--mc-text-color);
+    border: none;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 var(--mc-border-dark);
+    
+    /* Borda 3D estilo Minecraft */
+    border-top: 2px solid var(--mc-border-light);
+    border-left: 2px solid var(--mc-border-light);
+    border-bottom: 2px solid var(--mc-border-dark);
+    border-right: 2px solid var(--mc-border-dark);
+    transition: background-color 0.1s;
+}
+
+.mc-button:hover {
+    background-color: var(--mc-button-hover);
+}
+
+.mc-button:active {
+    /* Efeito de botão pressionado */
+    border-top: 2px solid var(--mc-border-dark);
+    border-left: 2px solid var(--mc-border-dark);
+    border-bottom: 2px solid var(--mc-border-light);
+    border-right: 2px solid var(--mc-border-light);
+    background-color: var(--mc-dark-gray);
+    transform: translateY(1px);
+}
+
+/* Painel Esquerdo */
+#item-grid-container {
+    width: 350px;
+    min-width: 300px;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#item-grid-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #8B8B8B; /* Fundo interno do painel */
+}
+
+/* Área de Preview (Direita) */
+#preview-area {
+    flex-grow: 1;
+    height: 200px;
+    width: 200px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#skin-viewer {
+    flex-grow: 1;
+    background-color: #585858; /* Fundo da cena 3D */
+    /* Garante que o canvas ocupe o espaço disponível */
+    width: 10%; 
+    height: 10%;
+}
+
+/* Controles Superiores e Inferiores */
+#top-controls, #bottom-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 10px;
+}
+
+#top-controls {
+    justify-content: flex-start;
+    border-bottom: 2px solid var(--mc-border-dark);
+}
+
+#bottom-controls {
+    border-top: 2px solid var(--mc-border-dark);
+}
+
+/* Estilo do Toggle (Steve/Alex) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--mc-button-bg);
+    border: 2px solid var(--mc-border-dark);
+    transition: .4s;
+    image-rendering: pixelated;
+}
+.slider:before {
+    position: absolute; content: " "; height: 26px; width: 26px; left: 4px; bottom: 4px;
+    background-color: var(--mc-text-color);
+    border: 1px solid var(--mc-dark-gray);
+    transition: .4s;
+    image-rendering: pixelated;
+}
+input:checked + .slider { background-color: var(--mc-green-text); }
+input:checked + .slider:before { transform: translateX(26px); }
+.type-label { font-size: 16px; padding: 0 5px; }

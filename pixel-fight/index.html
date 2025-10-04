@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Briga de Pixels</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Botões fixos no topo -->
+  <div class="top-bar">
+    <button id="btnConfig" class="circle-btn">⚙️</button>
+    <button id="btnScreenshot" class="circle-btn">📷</button>
+    <button id="btnAddTeam" class="circle-btn">➕</button>
+  </div>
+
+  <!-- Área principal -->
+  <div class="main-container">
+    <canvas id="pixelCanvas"></canvas>
+    <div class="controls">
+      <button id="btnStartStop" class="round-btn">Iniciar</button>
+      <button id="btnPause" class="round-btn">⏸️</button>
+    </div>
+  </div>
+
+  <!-- Modal de Configurações -->
+  <div id="configModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Configurações</h2>
+
+      <label>Tema:
+        <select id="themeSelect">
+          <option value="light">Claro</option>
+          <option value="amoled">Amoled</option>
+          <option value="gray">Cinza</option>
+          <option value="blue">Azul Escuro</option>
+        </select>
+      </label>
+
+      <label>Resolução:
+        <input type="range" id="resolutionInput" min="6" max="150" value="50" step="1">
+        <span id="resolutionValue">50</span>
+      </label>
+
+      <label>Times:
+        <input type="range" id="teamsInput" min="2" max="9" value="4" step="1">
+        <span id="teamsValue">4</span>
+      </label>
+
+      <div id="teamColorsContainer"></div>
+
+      <label>Ticks por segundo:
+        <input type="range" id="tickRateInput" min="1" max="60" value="20" step="1">
+        <span id="tickRateValue">20</span>
+      </label>
+
+      <button id="btnApplyConfig" class="modal-btn">Aplicar</button>
+      <button id="btnResetConfig" class="modal-btn">Resetar</button>
+      <button id="btnCloseConfig" class="modal-btn">Fechar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

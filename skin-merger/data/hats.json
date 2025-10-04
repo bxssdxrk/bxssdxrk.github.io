@@ -1,0 +1,42 @@
+[
+  {
+    "id": "kufiya",
+    "category": "hats",
+    "name": "Kufiya",
+    "enabled": true,
+    "texturePath": "./assets/hats/1.png",
+    "modelPart": "head",
+    "colorMap": [], 
+    "defaultColor": {
+      "1": "ff0000",
+      "2": "ffffff",
+      "3": "000000"
+    }, 
+    "tags": [
+      "keffiyeh", 
+      "kufiya", 
+      "ghutra", 
+      "shemagh"
+    ]
+  },
+  {
+    "id": "hat2",
+    "category": "hats",
+    "name": "Outro Chaléu",
+    "enabled": true,
+    "texturePath": "./assets/hats/2.png",
+    "modelPart": "head",
+    "colorMap": [], 
+    "defaultColor": {
+      "1": "ff0000",
+      "2": "ffffff",
+      "3": "000000"
+    }, 
+    "tags": [
+      "keffiyeh", 
+      "kufiya", 
+      "ghutra", 
+      "shemagh"
+    ]
+  }
+]

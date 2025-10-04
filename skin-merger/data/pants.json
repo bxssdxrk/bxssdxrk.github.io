@@ -1,0 +1,15 @@
+[
+  {
+    "id": "casual",
+    "category": "pants",
+    "name": "Casual",
+    "enabled": true,
+    "texturePath": "./assets/pants/1.png",
+    "modelPart": "legs",
+    "colorMap": [], 
+    "defaultColor": {
+      "1": "000000"
+    }, 
+    "tags": []
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "medium-low",
+    "category": "eyes",
+    "name": "Médio Baixo",
+    "enabled": true,
+    "texturePath": "./assets/eyes/1.png",
+    "modelPart": "head",
+    "colorMap": [],
+    "defaultColor": {
+      "1": "000000"
+    },
+    "tags": []
+  }
+]

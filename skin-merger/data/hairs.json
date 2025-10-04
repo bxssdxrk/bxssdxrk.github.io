@@ -1,0 +1,15 @@
+[
+  {
+    "id": "full",
+    "category": "hairs",
+    "name": "Cheio",
+    "enabled": true,
+    "texturePath": "./assets/hairs/1.png",
+    "modelPart": "head",
+    "colorMap": [],
+    "defaultColor": {
+      "1": "000000"
+    },
+    "tags": []
+  }
+]

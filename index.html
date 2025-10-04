@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma página inútil! (igual eu)</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        #initial-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const enterButton = document.getElementById('enter-button');
+            enterButton.addEventListener('click', function () {
+                window.location.href = '/home/';
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="initial-content">
+        <h1>Você não deveria estar aqui...</h1>
+        <button id="enter-button">fds n te perguntei nd (Entrar)</button>
+    </div>
+</body>
+</html>

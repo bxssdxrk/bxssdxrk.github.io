@@ -1,0 +1,17 @@
+[
+  {
+    "id": "striped1",
+    "category": "shirts",
+    "name": "Camisa Listrada",
+    "enabled": true,
+    "texturePath": "./assets/shirts/1.png",
+    "modelPart": "torso",
+    "colorMap": [], 
+    "defaultColor": {
+      "1": "ffffff",
+      "2": "000000"
+    }, 
+    "tags": [
+    ]
+  }
+]
