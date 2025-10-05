@@ -10,10 +10,12 @@ async function loadCategoryItems(categoryName) {
     // 1. Constrói o caminho completo do arquivo JSON.
     // Exemplo: se categoryName é 'hats', o caminho será './data/hats.json'
     const filePath = `./data/${categoryName}.json`;
+    
 
     try {
         // 2. Tenta buscar o arquivo
         const response = await fetch(filePath);
+        console.log(response);
 
         // 3. Verifica se a requisição foi bem-sucedida (Status 200-299)
         if (!response.ok) {

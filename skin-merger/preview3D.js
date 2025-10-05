@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Adiciona uma animação de caminhada para deixar mais vivo
     skinViewer.animation = null;
+    skinViewer.loadPanorama(config.DEFAULT_PANORAMA);
 
     // 3. Adiciona o listener para o Toggle Steve/Alex
     const slimToggle = document.getElementById('slim-toggle');

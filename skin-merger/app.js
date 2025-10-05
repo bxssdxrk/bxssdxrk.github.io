@@ -2,8 +2,8 @@
 
 // Ordem de renderização, do mais baixo (desenhar primeiro) para o mais alto (desenhar por último)
 const RENDER_ORDER = [
-    'shoes',
     'socks',
+    'shoes',
     'underwears',
     'pants',
     'pants-accessories',
@@ -24,7 +24,6 @@ let appliedAccessories = {};
 /**
  * Função responsável por fundir a skin base + TODOS os acessórios ativos e renderizar.
  */
-// app.js (Função renderAllAccessories CORRIGIDA)
 
 async function renderAllAccessories() {
     const viewer = window.skinViewer;
@@ -74,6 +73,7 @@ function setupCategoryToggles() {
 
 function renderItemList(items) {
     const itemsHtml = items.map(item => {
+      if (!item.enabled) return '';
       return `
       <button class="item-button" data-item-id="${item.id}">
         ${item.name}
@@ -94,7 +94,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Aplicação iniciada. Carregando dados iniciais...");
     
     // 1. CARREGAR DADOS
-    const [hats, pants, eyes, hairs, shirts] = await Promise.all([
+    const [
+      hats, 
+      pants, 
+      eyes, 
+      hairs, 
+      shirts,
+      tshirts,
+      eyebrows,
+    ] = await Promise.all([
         loadCategoryItems('hats'),
         loadCategoryItems('hairs'),
         loadCategoryItems('eyes'),
@@ -112,13 +120,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderItemList(pants);
     setupCategoryToggles();
     
+    const loadingText = document.querySelector('.loading-text');
+    if (loadingText) loadingText.remove();
+    
     // 3. CONFIGURAR LISTENERS (ESTE BLOCO VEM DEPOIS)
     const allItems = [
       ...hats, 
-      ...hairs,
-      ...eyes,
+      ...pants, 
+      ...eyes, 
+      ...hairs, 
       ...shirts,
-      ...pants,
     ];
 
     // Re-renderizar todos os acessórios ao trocar o modelo Steve/Alex
@@ -126,13 +137,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     slimToggle.addEventListener('change', renderAllAccessories); 
 
     const itemButtons = document.querySelectorAll('.item-button');
-    
     itemButtons.forEach(button => {
         button.addEventListener('click', async () => {
             const clickedId = button.dataset.itemId; 
             const itemToApply = allItems.find(item => item.id === clickedId);
             
+            // 🚨 MUDANÇA CRÍTICA: A chave de estado agora é a CATEGORIA, não a modelPart.
             const stateKey = itemToApply.category; 
+            
+            // Lógica de Estado (Toggle e Substituição)
             
             // Verificamos se o item *naquela categoria* já está selecionado
             if (appliedAccessories[stateKey] && appliedAccessories[stateKey].id === clickedId) {
@@ -148,8 +161,4 @@ document.addEventListener('DOMContentLoaded', async () => {
             await renderAllAccessories();
         });
     });
-
-    
-    const loadingText = document.querySelector('.loading-text');
-    if (loadingText) loadingText.remove();
 });
