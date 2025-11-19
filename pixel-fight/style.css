@@ -3,6 +3,7 @@
   --text-color: #000000;
   --primary-color: #007bff;
   --secondary-color: #6c757d;
+  --border-color: #e0e0e0;
 }
 
 body {
@@ -36,11 +37,12 @@ body {
   cursor: pointer;
   background-color: var(--secondary-color);
   color: var(--text-color);
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .circle-btn:hover {
   background-color: var(--primary-color);
+  transform: scale(1.1);
 }
 
 .main-container {
@@ -49,12 +51,15 @@ body {
   align-items: center;
   margin-top: 70px;
   padding: 20px;
+  width: 100%;
 }
 
 canvas {
   border: 2px solid var(--text-color);
   margin: auto;
   display: block;
+  max-width: 90vh;
+  max-height: 70vh;
 }
 
 .controls {
@@ -70,13 +75,36 @@ canvas {
   cursor: pointer;
   background-color: var(--primary-color);
   color: var(--bg-color);
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
 }
 
 .round-btn:hover {
   background-color: var(--secondary-color);
+  transform: scale(1.05);
 }
 
+/* Estatísticas em tempo real */
+.stats-display {
+  margin-top: 15px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 250px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.stats-display h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.stat-item {
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+/* Modal Compacto */
 .modal {
   position: fixed;
   top: 0;
@@ -87,6 +115,7 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2000;
 }
 
 .modal.hidden {
@@ -96,87 +125,272 @@ canvas {
 .modal-content {
   background: var(--bg-color);
   color: var(--text-color);
-  padding: 20px;
-  border-radius: 10px;
-  width: 350px;
-  max-width: 90%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 95%;
+  max-height: 85vh;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.modal-content h2 {
-  margin-bottom: 20px;
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, var(--primary-color), rgba(0,123,255,0.8));
+  color: white;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  transform: rotate(90deg);
+  transition: transform 0.2s;
+}
+
+/* Abas */
+.config-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border-color);
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--secondary-color);
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
   color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
 }
 
-.modal-content label {
+.tab-btn:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Conteúdo das abas */
+.tab-content {
+  display: none;
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tab-content.active {
   display: block;
-  margin-bottom: 10px;
-  color: var(--text-color);
 }
 
-.modal-content input[type="range"] {
-  width: 100%;
-  margin-bottom: 15px;
+/* Grid de configuração compacta */
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-.modal-content span {
-  display: inline-block;
-  margin-left: 10px;
+.config-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.config-item label {
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.config-item label span {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
   font-weight: bold;
+}
+
+.config-item input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.config-item input[type="text"],
+.config-item select {
+  padding: 6px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.config-item.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.config-item.checkbox label {
+  margin: 0;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.config-item.checkbox input[type="checkbox"] {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Grid de Cores */
+.colors-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  max-height: 350px;
+  overflow-y: auto;
 }
 
 .team-color-picker {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 8px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
 }
 
 .team-color-picker label {
   margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  flex: 1;
 }
 
 .color-input-group {
   display: flex;
   align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .color-input-group .color-input {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .color-input-group .color-text {
-  width: 70px;
+  width: 60px;
   text-align: center;
-  padding: 3px;
-  border: 1px solid var(--secondary-color);
+  padding: 4px;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  margin-left: 5px;
+  font-size: 11px;
 }
 
-.modal-content .btn-group {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+.color-input-group .speed-input {
+  width: 50px;
+  height: 4px;
 }
 
-.modal-content button {
-  padding: 8px 20px;
-  border: none;
+/* Botões compactos */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.mini-btn {
+  padding: 6px 8px;
+  font-size: 11px;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: var(--primary-color);
-  color: var(--bg-color);
+  background-color: rgba(0, 123, 255, 0.1);
+  color: var(--primary-color);
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.2s;
 }
 
-.modal-content button:hover {
+.mini-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Footer do Modal */
+.modal-footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: white;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.modal-btn:hover {
   background-color: var(--secondary-color);
+  color: white;
+  border-color: var(--secondary-color);
 }
 
-/* Estilos para a captura de tela */
-#screenshot {
-  display: none;
-  margin-top: 10px;
+.modal-btn.primary {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.modal-btn.primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
 }

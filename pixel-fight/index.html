@@ -10,9 +10,9 @@
 <body>
   <!-- Botões fixos no topo -->
   <div class="top-bar">
-    <button id="btnConfig" class="circle-btn">⚙️</button>
-    <button id="btnScreenshot" class="circle-btn">📷</button>
-    <button id="btnAddTeam" class="circle-btn">➕</button>
+    <button id="btnConfig" class="circle-btn" title="Configurações">⚙️</button>
+    <button id="btnScreenshot" class="circle-btn" title="Captura de tela">📷</button>
+    <button id="btnAddTeam" class="circle-btn" title="Adicionar time">➕</button>
   </div>
 
   <!-- Área principal -->
@@ -21,43 +21,95 @@
     <div class="controls">
       <button id="btnStartStop" class="round-btn">Iniciar</button>
       <button id="btnPause" class="round-btn">⏸️</button>
+      <button id="btnEndGame" class="round-btn" title="Encerrar partida">🏁</button>
     </div>
+    <div id="statsDisplay" class="stats-display" style="display: none;"></div>
   </div>
 
-  <!-- Modal de Configurações -->
+  <!-- Modal de Configurações - Redesenhado Compacto -->
   <div id="configModal" class="modal hidden">
     <div class="modal-content">
-      <h2>Configurações</h2>
+      <div class="modal-header">
+        <h2>⚙️ Configurações</h2>
+        <button id="btnCloseConfig" class="close-btn">✕</button>
+      </div>
 
-      <label>Tema:
-        <select id="themeSelect">
-          <option value="light">Claro</option>
-          <option value="amoled">Amoled</option>
-          <option value="gray">Cinza</option>
-          <option value="blue">Azul Escuro</option>
-        </select>
-      </label>
+      <div class="config-tabs">
+        <button class="tab-btn active" data-tab="basic">Básico</button>
+        <button class="tab-btn" data-tab="advanced">Avançado</button>
+        <button class="tab-btn" data-tab="colors">Cores</button>
+      </div>
 
-      <label>Resolução:
-        <input type="range" id="resolutionInput" min="6" max="150" value="50" step="1">
-        <span id="resolutionValue">50</span>
-      </label>
+      <!-- Aba Básico -->
+      <div class="tab-content active" id="basic-tab">
+        <div class="config-grid">
+          <div class="config-item">
+            <label>Tema:</label>
+            <select id="themeSelect">
+              <option value="light">Claro</option>
+              <option value="amoled">Amoled</option>
+              <option value="gray">Cinza</option>
+              <option value="blue">Azul Escuro</option>
+            </select>
+          </div>
 
-      <label>Times:
-        <input type="range" id="teamsInput" min="2" max="9" value="4" step="1">
-        <span id="teamsValue">4</span>
-      </label>
+          <div class="config-item">
+            <label>Resolução: <span id="resolutionValue">50</span></label>
+            <input type="range" id="resolutionInput" min="6" max="150" value="50" step="1">
+          </div>
 
-      <div id="teamColorsContainer"></div>
+          <div class="config-item">
+            <label>Times: <span id="teamsValue">4</span></label>
+            <input type="range" id="teamsInput" min="2" max="9" value="4" step="1">
+          </div>
 
-      <label>Ticks por segundo:
-        <input type="range" id="tickRateInput" min="1" max="60" value="20" step="1">
-        <span id="tickRateValue">20</span>
-      </label>
+          <div class="config-item">
+            <label>Ticks/s: <span id="tickRateValue">20</span></label>
+            <input type="range" id="tickRateInput" min="1" max="60" value="20" step="1">
+          </div>
+        </div>
+      </div>
 
-      <button id="btnApplyConfig" class="modal-btn">Aplicar</button>
-      <button id="btnResetConfig" class="modal-btn">Resetar</button>
-      <button id="btnCloseConfig" class="modal-btn">Fechar</button>
+      <!-- Aba Avançado -->
+      <div class="tab-content" id="advanced-tab">
+        <div class="config-grid">
+          <div class="config-item">
+            <label>Zoom: <span id="zoomValue">100%</span></label>
+            <input type="range" id="zoomInput" min="0.5" max="3" value="1" step="0.1">
+          </div>
+
+          <div class="config-item checkbox">
+            <label>
+              <input type="checkbox" id="statsToggle">
+              Mostrar Estatísticas
+            </label>
+          </div>
+
+          <div class="config-item checkbox">
+            <label>
+              <input type="checkbox" id="sandboxToggle">
+              Modo Sandbox
+            </label>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="btnExportConfig" class="mini-btn">💾 Exportar</button>
+          <button id="btnImportConfig" class="mini-btn">📂 Importar</button>
+          <button id="btnShowHistory" class="mini-btn">📊 Histórico</button>
+        </div>
+      </div>
+
+      <!-- Aba Cores -->
+      <div class="tab-content" id="colors-tab">
+        <div id="teamColorsContainer" class="colors-grid"></div>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="modal-footer">
+        <button id="btnApplyConfig" class="modal-btn primary">Aplicar</button>
+        <button id="btnResetConfig" class="modal-btn">Resetar</button>
+      </div>
     </div>
   </div>
 

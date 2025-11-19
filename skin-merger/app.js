@@ -66,6 +66,11 @@ function setupCategoryToggles() {
             if (targetContent) {
                 // A função .toggle() adiciona a classe se ela não existir, e remove se ela existir.
                 targetContent.classList.toggle('collapsed');
+                
+                // Alternar o símbolo de expandir/colapsar
+                const arrow = header.textContent.charAt(0);
+                const text = header.textContent.substring(2);
+                header.textContent = (arrow === '▼' ? '▶' : '▼') + ' ' + text;
             }
         });
     });
@@ -136,6 +141,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const slimToggle = document.getElementById('slim-toggle');
     slimToggle.addEventListener('change', renderAllAccessories); 
 
+    // Adicionar funcionalidade aos botões do painel de controles
+    const resetButton = document.querySelector('.mc-button:nth-of-type(1)');
+    const view2dButton = document.querySelector('.mc-button:nth-of-type(2)');
+    const downloadButton = document.querySelector('.mc-button:nth-of-type(3)');
+    const shareButton = document.querySelector('.mc-button:nth-of-type(4)');
+    
+    if (resetButton) {
+        resetButton.addEventListener('click', () => {
+            appliedAccessories = {};
+            document.querySelectorAll('.item-button').forEach(btn => btn.style.background = '');
+            renderAllAccessories();
+        });
+    }
+
     const itemButtons = document.querySelectorAll('.item-button');
     itemButtons.forEach(button => {
         button.addEventListener('click', async () => {
@@ -151,10 +170,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (appliedAccessories[stateKey] && appliedAccessories[stateKey].id === clickedId) {
                 // TOGGLE: Se já estiver ativo, remova a chave de CATEGORIA
                 delete appliedAccessories[stateKey];
+                button.style.background = 'var(--mc-dirt-bg)';
                 console.log(`Removido: ${itemToApply.name}`);
             } else {
                 // SUBSTITUIÇÃO: Adiciona/Substitui o item na chave de CATEGORIA
                 appliedAccessories[stateKey] = itemToApply;
+                // Remover destaque dos outros botões da mesma categoria
+                document.querySelectorAll('.item-button').forEach(btn => {
+                    const btnId = btn.dataset.itemId;
+                    const btnItem = allItems.find(item => item.id === btnId);
+                    if (btnItem && btnItem.category === stateKey && btnItem.id !== clickedId) {
+                        btn.style.background = 'var(--mc-dirt-bg)';
+                    }
+                });
+                button.style.background = 'var(--mc-button-hover-bg)';
                 console.log(`Aplicado: ${itemToApply.name} (Substituindo item anterior na categoria: ${stateKey})`);
             }
             
