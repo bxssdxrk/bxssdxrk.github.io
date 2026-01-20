@@ -1,114 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raw Data Interpreter</title>
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.0/dist/ffmpeg.min.js"></script>
+    <title>Uma página inútil! (igual eu)</title>
     <style>
-        :root { --bg: #ffffff; --txt: #1a1a1a; --border: #e0e0e0; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--txt); padding: 20px; line-height: 1.4; }
-        .box { border: 1px solid var(--border); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        label { font-size: 11px; text-transform: uppercase; color: #888; font-weight: bold; display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
-        button { background: #000; color: #fff; border: none; padding: 15px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; }
-        button:disabled { background: #ccc; }
-        #log { font-family: monospace; font-size: 10px; background: #f4f4f4; padding: 10px; height: 100px; overflow-y: auto; white-space: pre-wrap; margin-top: 15px; }
-        video { width: 100%; margin-top: 15px; background: #000; border-radius: 4px; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        #initial-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: white;
+            color: black;
+        }
     </style>
-</head>
-<body>
-
-    <h3>Raw Data Interpreter</h3>
-    <p style="font-size: 12px; color: #666;">Converta arquivos em ruído audiovisual. Recomendado arquivos menores que 10MB para celular.</p>
-
-    <div class="box">
-        <label>1. Selecionar Arquivo</label>
-        <input type="file" id="fileInput">
-
-        <label>2. Largura (Pixels)</label>
-        <input type="number" id="width" value="128">
-
-        <label>3. Framerate (FPS)</label>
-        <input type="number" id="fps" value="24">
-
-        <button id="startBtn">PROCESSAR DADOS</button>
-    </div>
-
-    <div id="resultArea"></div>
-    <div id="log">Aguardando início...</div>
-
     <script>
-        const { createFFmpeg, fetchFile } = FFmpeg;
-        
-        // Configuração vital para rodar em Single Thread sem erro de proxy
-        const ffmpeg = createFFmpeg({ 
-            log: true,
-            corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
-        });
-
-        const logElement = document.getElementById('log');
-        const logger = (msg) => {
-            logElement.textContent += `\n> ${msg}`;
-            logElement.scrollTop = logElement.scrollHeight;
-        };
-
-        ffmpeg.setLogger(({ message }) => logger(message));
-
-        document.getElementById('startBtn').addEventListener('click', async () => {
-            const file = document.getElementById('fileInput').files[0];
-            if (!file) return alert("Selecione um arquivo!");
-
-            const btn = document.getElementById('startBtn');
-            btn.disabled = true;
-            btn.textContent = "PROCESSANDO...";
-            logElement.textContent = "Iniciando FFmpeg...";
-
-            try {
-                if (!ffmpeg.isLoaded()) await ffmpeg.load();
-
-                const width = parseInt(document.getElementById('width').value);
-                const fps = parseInt(document.getElementById('fps').value);
-                
-                // Cálculo de altura par (exigência do codec h264)
-                let height = Math.floor((file.size / 4) / width);
-                if (height % 2 !== 0) height--;
-                if (height < 2) height = 2;
-
-                ffmpeg.FS('writeFile', 'input', await fetchFile(file));
-
-                logger(`Renderizando: ${width}x${height} @ ${fps}fps`);
-
-                // Comando otimizado para não travar o celular
-                await ffmpeg.run(
-                    '-f', 'rawvideo',
-                    '-pixel_format', 'rgba',
-                    '-video_size', `${width}x${height}`,
-                    '-framerate', `${fps}`,
-                    '-i', 'input',
-                    '-c:v', 'libx264',
-                    '-preset', 'ultrafast',
-                    '-pix_fmt', 'yuv420p',
-                    'output.mp4'
-                );
-
-                const data = ffmpeg.FS('readFile', 'output.mp4');
-                const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
-                
-                document.getElementById('resultArea').innerHTML = `
-                    <video src="${url}" controls></video>
-                    <a href="${url}" download="result.mp4" style="display:block; text-align:center; color:blue; margin-top:10px;">Baixar Vídeo</a>
-                `;
-
-                btn.textContent = "SUCESSO!";
-            } catch (e) {
-                logger("ERRO: " + e.message);
-                console.error(e);
-                btn.textContent = "FALHOU";
-            } finally {
-                btn.disabled = false;
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            const enterButton = document.getElementById('enter-button');
+            enterButton.addEventListener('click', function () {
+                window.location.href = '/home/';
+            });
         });
     </script>
+</head>
+<body>
+    <div id="initial-content">
+        <h1>Você não deveria estar aqui...</h1>
+        <button id="enter-button">fds n te perguntei nd (Entrar)</button>
+    </div>
 </body>
 </html>
